@@ -7,7 +7,15 @@ const cors = require('cors');
 dotenv.config();
 const app = express();
 
-app.use(cors()); // Allow frontend to access the backend
+// Allow frontend to access the backend
+app.use(
+  cors({
+    origin: "https://codewithakshit.vercel.app", // your frontend
+    methods: ["GET", "POST"],
+    credentials: true, // only if you're using cookies or auth headers
+  })
+);
+
 app.use(express.json()); // Parse JSON body
 
 // POST endpoint to send email

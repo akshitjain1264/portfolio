@@ -8,8 +8,8 @@ const Education = () => {
     {
       degree: "B.Tech in Computer Science and Engineering",
       institution: "Maharaja Agrasen Institute of Technology, Delhi",
-      duration: "2023 – 2026 (Expected)",
-      cgpa: "8.67",
+      duration: "2023 – 2026",
+      cgpa: "8.7",
       status: "Ongoing"
     },
     {
