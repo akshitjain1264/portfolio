@@ -29,6 +29,7 @@ type FormData = z.infer<typeof formSchema>;
 const Contact = () => {
   const { toast } = useToast();
   const [loading, setLoading] = React.useState(false);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -43,7 +44,7 @@ const Contact = () => {
   const onSubmit = async (data: FormData) => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/contact", {
+      const res = await fetch(`${apiUrl}/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
