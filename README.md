@@ -1,6 +1,6 @@
 # Welcome to My personal Portfolio
 
-Portfolio link - https://www.codewithakshit.netlify.app
+Portfolio link - https://www.codewithakshit.vercel.app
 
 Leetcode - https://www.leetcode.com/u/codewithakshit
 
