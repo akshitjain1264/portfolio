@@ -133,7 +133,7 @@ const Contact = () => {
                     <Linkedin className="h-8 w-8 mx-auto mb-4 text-primary" />
                     <h3 className="font-semibold mb-2">LinkedIn</h3>
                     <a
-                      href="https://linkedin.com/in/akshitjain"
+                      href="https://www.linkedin.com/in/akshit-jain-2392602a9/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-muted-foreground hover:text-primary transition-colors"
