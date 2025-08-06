@@ -20,7 +20,7 @@ const About = () => {
               <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur-xl opacity-20"></div>
               <div className="relative bg-card rounded-2xl p-2 shadow-xl">
                 <img
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop&crop=center"
+                  src="/about_me.avif"
                   alt="Developer working on laptop"
                   className="w-full h-auto rounded-xl object-cover"
                 />

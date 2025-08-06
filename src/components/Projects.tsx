@@ -23,7 +23,7 @@ const Projects = () => {
       featured: true,
     },
     {
-      title: "Medmin",
+      title: "Docspath",
       description:
         "Modern healthcare business management app built with Next.js and TypeScript. Enables hospitals and clinics to manage EHRs, appointments, prescriptions, and billing seamlessly.",
       technologies: [

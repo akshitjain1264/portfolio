@@ -1,48 +1,79 @@
-
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Mail, Github, Linkedin, Code } from 'lucide-react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { useToast } from '@/hooks/use-toast';
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Mail, Github, Linkedin, Code } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Please enter a valid email address'),
-  subject: z.string().min(5, 'Subject must be at least 5 characters'),
-  message: z.string().min(10, 'Message must be at least 10 characters'),
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email address"),
+  subject: z.string().min(5, "Subject must be at least 5 characters"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
 });
 
 type FormData = z.infer<typeof formSchema>;
 
 const Contact = () => {
   const { toast } = useToast();
-  
+  const [loading, setLoading] = React.useState(false);
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      email: '',
-      subject: '',
-      message: '',
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
     },
   });
 
   const onSubmit = async (data: FormData) => {
-    console.log('Form submitted:', data);
-    
-    // Simulate form submission
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for your message. I'll get back to you soon!",
-    });
-    
-    form.reset();
+    setLoading(true);
+    try {
+      const res = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (res.ok) {
+        toast({
+          title: "Message Sent!",
+          description: "Thank you for your message. I'll get back to you soon!",
+        });
+        form.reset();
+      } else {
+        toast({
+          title: "Error!",
+          description: "Something went wrong. Please try again later.",
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: "Network Error!",
+        description: "Check your connection or try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -64,19 +95,20 @@ const Contact = () => {
                   Let's Build Something Amazing Together
                 </CardTitle>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  I'm always excited to work on new projects and collaborate with fellow developers. 
-                  Whether you have a project in mind, need mentoring, or just want to connect, 
-                  feel free to reach out!
+                  I'm always excited to work on new projects and collaborate
+                  with fellow developers. Whether you have a project in mind,
+                  need mentoring, or just want to connect, feel free to reach
+                  out!
                 </p>
               </CardHeader>
-              
+
               <CardContent>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
                   <Card className="p-6 text-center hover:shadow-md transition-shadow duration-300 hover-scale">
                     <Mail className="h-8 w-8 mx-auto mb-4 text-primary" />
                     <h3 className="font-semibold mb-2">Email</h3>
-                    <a 
-                      href="mailto:toakshit2004@gmail.com" 
+                    <a
+                      href="mailto:toakshit2004@gmail.com"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
                       toakshit2004@gmail.com
@@ -86,9 +118,9 @@ const Contact = () => {
                   <Card className="p-6 text-center hover:shadow-md transition-shadow duration-300 hover-scale">
                     <Github className="h-8 w-8 mx-auto mb-4 text-primary" />
                     <h3 className="font-semibold mb-2">GitHub</h3>
-                    <a 
-                      href="https://github.com/akshitjain1264" 
-                      target="_blank" 
+                    <a
+                      href="https://github.com/akshitjain1264"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
@@ -99,9 +131,9 @@ const Contact = () => {
                   <Card className="p-6 text-center hover:shadow-md transition-shadow duration-300 hover-scale">
                     <Linkedin className="h-8 w-8 mx-auto mb-4 text-primary" />
                     <h3 className="font-semibold mb-2">LinkedIn</h3>
-                    <a 
-                      href="https://linkedin.com/in/akshitjain" 
-                      target="_blank" 
+                    <a
+                      href="https://linkedin.com/in/akshitjain"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
@@ -112,9 +144,9 @@ const Contact = () => {
                   <Card className="p-6 text-center hover:shadow-md transition-shadow duration-300 hover-scale">
                     <Code className="h-8 w-8 mx-auto mb-4 text-primary" />
                     <h3 className="font-semibold mb-2">LeetCode</h3>
-                    <a 
-                      href="https://www.leetcode.com/u/codewithakshit" 
-                      target="_blank" 
+                    <a
+                      href="https://www.leetcode.com/u/codewithakshit"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
@@ -128,7 +160,8 @@ const Contact = () => {
                   <p className="text-muted-foreground">Delhi, India</p>
                   <p className="text-muted-foreground">📞 +91 9910281163</p>
                   <p className="text-sm text-muted-foreground mt-2">
-                    💻 LeetCode: <span className="font-mono">codewithakshit</span>
+                    💻 LeetCode:{" "}
+                    <span className="font-mono">codewithakshit</span>
                   </p>
                 </div>
               </CardContent>
@@ -139,15 +172,21 @@ const Contact = () => {
           <div>
             <Card className="shadow-lg p-8">
               <CardHeader className="text-center pb-6">
-                <CardTitle className="text-2xl font-bold">Send Me a Message</CardTitle>
+                <CardTitle className="text-2xl font-bold">
+                  Send Me a Message
+                </CardTitle>
                 <p className="text-muted-foreground">
-                  Fill out the form below and I'll get back to you as soon as possible.
+                  Fill out the form below and I'll get back to you as soon as
+                  possible.
                 </p>
               </CardHeader>
-              
+
               <CardContent>
                 <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-6"
+                  >
                     <FormField
                       control={form.control}
                       name="name"
@@ -169,7 +208,11 @@ const Contact = () => {
                         <FormItem>
                           <FormLabel>Email</FormLabel>
                           <FormControl>
-                            <Input placeholder="your.email@example.com" type="email" {...field} />
+                            <Input
+                              placeholder="your.email@example.com"
+                              type="email"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -183,7 +226,10 @@ const Contact = () => {
                         <FormItem>
                           <FormLabel>Subject</FormLabel>
                           <FormControl>
-                            <Input placeholder="What's this about?" {...field} />
+                            <Input
+                              placeholder="What's this about?"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -197,7 +243,7 @@ const Contact = () => {
                         <FormItem>
                           <FormLabel>Message</FormLabel>
                           <FormControl>
-                            <Textarea 
+                            <Textarea
                               placeholder="Tell me about your project or just say hello..."
                               className="min-h-[120px]"
                               {...field}
@@ -208,24 +254,53 @@ const Contact = () => {
                       )}
                     />
 
-                    <Button 
-                      type="submit" 
-                      size="lg" 
-                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                    <Button
+                      type="submit"
+                      size="lg"
+                      disabled={loading}
+                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 flex items-center justify-center gap-2"
                     >
-                      Send Message
+                      {loading && (
+                        <svg
+                          className="animate-spin h-5 w-5 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                          ></path>
+                        </svg>
+                      )}
+                      {loading ? "Sending..." : "Send Message"}
                     </Button>
                   </form>
                 </Form>
 
                 <div className="text-center mt-6 pt-6 border-t">
-                  <p className="text-sm text-muted-foreground mb-4">Or reach out directly:</p>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Or reach out directly:
+                  </p>
                   <div className="flex justify-center gap-4">
                     <Button variant="outline" size="sm" asChild>
                       <a href="mailto:toakshit2004@gmail.com">Send Email</a>
                     </Button>
                     <Button variant="outline" size="sm" asChild>
-                      <a href="https://github.com/akshitjain1264" target="_blank" rel="noopener noreferrer">
+                      <a
+                        href="https://github.com/akshitjain1264"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         View GitHub
                       </a>
                     </Button>

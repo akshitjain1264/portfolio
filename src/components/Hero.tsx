@@ -95,7 +95,7 @@ const Hero = () => {
             <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur-xl opacity-30 animate-pulse"></div>
             <div className="relative bg-card rounded-2xl p-2 shadow-2xl">
               <img
-                src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop&crop=center"
+                src="/hero_image.jpeg"
                 alt="Programming workspace with code on monitor"
                 className="w-full h-auto rounded-xl object-cover max-w-md lg:max-w-lg"
               />

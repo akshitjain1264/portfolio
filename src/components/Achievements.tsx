@@ -11,7 +11,7 @@ const Achievements = () => {
       description: "Created an innovative AI-driven healthcare portal utilizing FaceAPI.js, Gemini API, and pdf-parse for intelligent document processing and facial recognition.",
       technologies: ["FaceAPI.js", "Gemini API", "pdf-parse", "AI/ML", "Healthcare Tech"],
       type: "Hackathon",
-      year: "2024"
+      year: "2025"
     },
     {
       title: "Smart India Hackathon 2024 Finalist",
